@@ -110,4 +110,3 @@ filter_experimenter_data()
 search_comprehension_cols()
 
 data.to_csv("clean_data.csv", index=False)
-print("clean_data.csv!")
