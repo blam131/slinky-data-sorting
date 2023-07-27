@@ -1,18 +1,11 @@
 import pandas as pd
 import numpy as np
 from coding_dict_master import coding_dict
-from stim_coding import stim_coding_dict
 
 MAX_DURATION = 1800
 FLUENCY = 6
-PAY_FIRST_DATE_ARTIFACT = "2022-11-08"
-LIKE_FIRST_DATE_ART = "2023-01-10"
-DIFF_MISTAKE_DATE = "2023-01-17"
-PAY_FIRST_DATE_ART = "2023-01-21"
-FIRST_Q_RANDOM_ART = "2023-02-02 16:59"
-IMG_ISSUES = "2023-5-30 14:10"
 
-data = pd.read_csv("Slinky_Jan_28_MTurk_July+21,+2023_10.38.csv",
+data = pd.read_csv("slinky_data.csv",
                     skiprows=1)
 
 def search_cols():
@@ -108,10 +101,6 @@ def filter_comprehension_check(col_loc, condition, domain):
 
     data.drop(data.loc[mask].index, axis=0, inplace=True)
 
-def add_like_pay_order():
-    # Creates a column that shows whether participant was presented like or pay question first
-    data["First_Question"] = np.where(data["Start Date"] < PAY_FIRST_DATE_ART, "Like", "Pay")
-
 search_cols()
 filter_duration()
 filter_duplicate()
@@ -119,26 +108,6 @@ filter_fluency()
 filter_incomplete_surveys()
 filter_experimenter_data()
 search_comprehension_cols()
-# add_like_pay_order()
 
-# print("\n", data.groupby(["Condition_Identity_Intent_Art"])["Condition_Identity_Intent_Art"].count())
-# print("\n", data.groupby(["Condition_Identity_Intent_Artifact"])["Condition_Identity_Intent_Artifact"].count())
-
-# while True:
-#     discard_old = input("\nDo you want to see Study 3-only data? Y/N ")
-    
-#     if discard_old == "Y":
-#         study3_only = (data[(data["Condition_Identity_Intent_Art"].str.contains("Like", na=False)) |
-#                             (data["Condition_Identity_Intent_Artifact"].str.contains("Like", na=False))])
-#         study3_only.to_csv("study3_only.csv", index=False)
-#         print("Saved as study3_only.csv!")
-#         break
-#     elif discard_old == "N":
-#         data.to_csv("running_total_study4.csv", index=False)
-#         print("Saved as running_total_study4.csv!")
-#         break
-#     else: 
-#         print("Not a valid answer!")
-
-data.to_csv("running_total_study4mturk.csv", index=False)
-print("Saved as running_total_study4mturk.csv!")
+data.to_csv("clean_data.csv", index=False)
+print("clean_data.csv!")
